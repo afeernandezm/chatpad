@@ -1,0 +1,36 @@
+<nav class="navbar navbar-expand-lg bg-dark custom-navbar" data-bs-theme="dark">
+  <div class="container-fluid">
+    <div style="width: 90px;">
+    <a class="navbar-brand" (click)="irAPagina('/')"><img style="width: auto; height: 50px; object-fit: contain;" src="../../assets/ChatPad__3_-removebg-preview (1) (1).png" alt=""></a>
+  </div>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav">
+        <li class="nav-item">
+          <a class="nav-link active" aria-current="page" (click)="irAPagina('/')">Inicio</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link active" aria-current="page" (click)="irAPagina('/notas')">Notas</a>
+        </li>
+        <li class="nav-item">
+
+          <a class="nav-link active" (click)="irAPagina('/mensajes')">Mensajes</a>
+        </li>
+        <li class="nav-item ml-auto" *ngIf="!usuario">
+          <a class="nav-link active" (click)="irAPagina('/inicioSesion')">Inicio sesión</a>
+        </li>
+        <li class="nav-item" *ngIf="usuario">
+          <a class="nav-link active">{{usuario}}</a>
+        </li>
+        <li class="nav-item" *ngIf="usuario" id="Btn-is">
+          <a class="nav-link active" (click)="cerrarSesion()">Cerrar sesión</a>
+        </li>
+        <li class="nav-item" *ngIf="!usuario">
+          <a class="nav-link active" (click)="irAPagina('/registro')">Registrarse</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>

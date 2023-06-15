@@ -1,0 +1,146 @@
+<body>
+
+
+<h2 style="text-align: center;" class="mt-2">NOTAS</h2>
+
+<div style="display: flex; justify-content: center;">
+  <div id="tarjetaInsertar">
+    <form>
+      <div class="form-group">
+        <label for="titulo">Título</label>
+        <input type="text" class="form-control" id="titulo" placeholder="Ingrese el título" name="titulo" [(ngModel)]="titulo">
+      </div>
+      <div class="form-group">
+        <label for="cuerpo">Cuerpo de la nota</label>
+        <textarea class="form-control" id="cuerpo" rows="5" placeholder="Ingrese el cuerpo de la nota" name="cuerpo" [(ngModel)]="cuerpo"></textarea>
+      </div>
+      <div class="form-group d-none">
+        <label for="fecha">Fecha</label>
+        <input type="text" class="form-control" id="fecha" [value]="fechaActual" readonly name="fecha" [(ngModel)]="fecha">
+      </div>
+
+      <button type="submit" class="btn btn-primary" (click)="insertarNota()">Guardar nota</button>
+    </form>
+    <br>
+    <div class="spinner"></div>
+  </div>
+</div>
+
+<div class="container-center" style="display: flex; align-items: center;">
+  <div class="notas-container">
+    <ul class="row" style="margin-right: 0px; padding-right: 0px;">
+      <li *ngFor="let nota of notas" class="nota-item col-md-3 mt-5">
+        <a [style.background-color]="nota.color" id="nota">
+          <h2 style="font-size: 50px;">{{nota.titulo}}</h2>
+          <p ><b>{{nota.cuerpo}}</b></p>
+          <div style="font-size: 15px;" class="nota-info">
+            <p class="enviado-por">
+              {{ nota.nombre_usuario ? 'Enviado por: ' + nota.nombre_usuario : 'Creada por ti' }}
+            </p>
+            <p class="fecha">{{nota.fecha}}</p>
+          </div>
+
+          <div class="d-flex justify-content-end center-div" style="display: flex; justify-content: center; align-items: center;">
+            <button class="btn btn-sm mr-2" style="background: transparent;" data-bs-toggle="modal" data-bs-target="#editar-cita-modal" (click)="seleccionarNota(nota.id_notas)">
+              <i class="fa-solid fa-pen-to-square fa-xl"></i>
+            </button>
+            <button class="btn btn-sm mr-2" style="background: transparent;" data-bs-toggle="modal" data-bs-target="#eliminarCitaModal" (click)="seleccionarNota(nota.id_notas)">
+              <i class="fa-solid fa-trash fa-xl"></i>
+            </button>
+            <button class="btn btn-md" style="background: transparent;" data-bs-toggle="modal" data-bs-target="#myModal" (click)="seleccionarNota(nota.id_notas)">
+              <i class="fa-solid fa-paper-plane fa-bounce fa-xl"></i>
+            </button>
+          </div>
+        </a>
+      </li>
+    </ul>
+  </div>
+</div>
+
+<!-- Modal enviar -->
+<div class="modal fade" id="myModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" *ngFor="let nota of notas">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Enviar nota</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <div class="mb-3">
+          <label for="selectUsuario" class="form-label">Seleccionar usuario</label>
+          <select class="form-select" [(ngModel)]="userEmail" name="userEmail" id="selectUsuario" >
+            <option value="" disabled selected>Selecciona un usuario</option>
+            <option value="{{email}}"  *ngFor="let email of userEmails">{{email}}</option>
+
+          </select>
+        </div>
+        <div class="mb-3">
+          <label for="inputNombre" class="form-label">Nombre de la persona que envía</label>
+          <input type="text" class="form-control" id="inputNombre">
+        </div>
+      </div>
+      <div class="modal-footer" >
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+        <button type="button" class="btn btn-primary" (click)="enviarNota(userEmail, nota.id_notas)">Enviar</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- editar nota modal -->
+<div class="modal"  #modal id="editar-cita-modal" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Modificar cita</h5>
+        <button type="button" class="close" data-bs-dismiss="modal" aria-label="Cerrar">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form>
+          <div class="form-group">
+            <label for="titulo">Título:</label>
+            <input type="text" class="form-control" id="titulo" name="titulo" [(ngModel)]="nuevoTitulo" required>
+          </div>
+          <div class="form-group">
+            <label for="cuerpo">Cuerpo:</label>
+            <textarea class="form-control" id="cuerpo" name="cuerpo" rows="3" [(ngModel)]="nuevoCuerpo" required></textarea>
+          </div>
+          <div class="form-group">
+            <label for="color">Color de fondo:</label>
+            <input type="color" class="form-control" id="color" name="color" [(ngModel)]="nuevoColor" >
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+        <button type="button" class="btn btn-primary" (click)="editarNota()">Guardar cambios</button>
+      </div>
+      <div class="spinner2"></div>
+    </div>
+  </div>
+</div>
+
+
+<!-- Modal eliminar cita -->
+<div class="modal fade" id="eliminarCitaModal" tabindex="-1" aria-labelledby="eliminarCitaModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="eliminarCitaModalLabel">¿Está seguro de que desea eliminar esta nota?</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+        <button type="button" class="btn btn-danger" (click)="borrarNota()">Eliminar</button>
+      </div>
+      <div class="spinner2"></div>
+    </div>
+  </div>
+</div>
+</body>
+
+
+
+

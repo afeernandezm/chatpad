@@ -1,0 +1,24 @@
+#intro {
+  background-image: url("../../assets/pexels-judit-peter-1766604.jpg");
+  height: 100vh;
+  background-size: cover; /* Ajusta el tamaño de la imagen para cubrir todo el contenedor */
+  background-position: center; /* Centra la imagen de fondo */
+}
+
+/* Height for devices larger than 576px */
+@media (min-width: 992px) {
+  #intro {
+    margin-top: -58.59px;
+  }
+}
+
+.navbar .nav-link {
+  color: #fff !important;
+}
+
+.form-container {
+  background-color: #ffffff;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+}
+
