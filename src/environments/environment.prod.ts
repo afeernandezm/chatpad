@@ -1,10 +1,10 @@
 export const environment = {
-  apiUrl: 'http://localhost:3000/chatPad',
+  apiUrl: 'https://back-chatpad.onrender.com/chatPad',
   production: true,
   URL : {
-    citas:"https://backend-sb-portalgym.onrender.com/chatPad/notas/",
-    ejercicios:"https://backend-sb-portalgym.onrender.com/chatPad/chats/",
-    usuarios:"https://backend-sb-portalgym.onrender.com/chatPad/usuarios/"
+    citas:"https://back-chatpad.onrender.com/chatPad/notas/",
+    ejercicios:"https://back-chatpad.onrender.com/chatPad/chats/",
+    usuarios:"https://back-chatpad.onrender.com/chatPad/usuarios/"
   },
-  location:"https://portalgym.vercel.app/"
+  location:"https://chat-pad.vercel.app/"
 };
